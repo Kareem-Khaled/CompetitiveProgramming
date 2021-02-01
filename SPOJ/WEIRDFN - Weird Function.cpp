@@ -7,6 +7,7 @@
 ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
 Believe in yourself ,( try and try and then try ), You can do it
 */
+// problem Link: https://www.spoj.com/problems/WEIRDFN/
 #define _CRT_SECURE_NO_WARNINGS
 #include<bits/stdc++.h>
 #include<unordered_map>
