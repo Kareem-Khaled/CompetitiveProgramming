@@ -1,12 +1,13 @@
-﻿/*
+/*
 ██╗  ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗        ██╗  ██╗██╗  ██╗ █████╗ ██╗     ███████╗██████╗
 ██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║        ██║ ██╔╝██║  ██║██╔══██╗██║     ██╔════╝██╔══██╗
 █████╔╝ ███████║██████╔╝█████╗  █████╗  ██╔████╔██║        █████╔╝ ███████║███████║██║     █████╗  ██║  ██║
 ██╔═██╗ ██╔══██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╔╝██║        ██╔═██╗ ██╔══██║██╔══██║██║     ██╔══╝  ██║  ██║
 ██║  ██╗██║  ██║██║  ██║███████╗███████╗██║ ╚═╝ ██║███████╗██║  ██╗██║  ██║██║  ██║███████╗███████╗██████╔╝
 ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
-Believe in yourself ,( try and try and then try ), You can do it 💗
+Believe in yourself ,( try and try and then try ), You can do it
 */
+// Problem Link : https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=766
 #define _CRT_SECURE_NO_WARNINGS
 #include<bits/stdc++.h>
 #include<unordered_map>
@@ -19,7 +20,7 @@ Believe in yourself ,( try and try and then try ), You can do it 💗
 #define watch(x) cout<<(#x)<<" = "<<x<<endl
 #define sz(s)	(int)(s.size())
 #define OO 0x3f3f3f3f3f3f3f3fLL
-const int oo = 0x3f3f3f3f, mod = 1e9 + 7;
+#define oo 0x3f3f3f3f
 using namespace std;
 typedef long long ll;
 typedef long double ld;
@@ -33,59 +34,29 @@ void K_K(){
 #endif  !ONLINEJUDGE
 	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 }
-ll gcd(ll a, ll b) {
-	return b == 0 ? abs(a) : gcd(b, a % b);
+int n, w; vector<vector<int>>arr;
+bool valid(int &x, int &y){
+	return x < n && y < w && arr[x][y];
 }
-ll lcm(ll a, ll b) {
-	return a / gcd(a, b) * b;
-}
-int n, w;
-int const N = 1e3;
-vector<vector<char>>arr;
-bool valid(int i, int j){
-	return i > 0 && j > 0 && i <= n&&j <= w&&arr[i][j] != 'X';
-}
-int sol(int i, int j){
-	if (!valid(i, j))
-		return 0;
-	if (i == n && j == w)
-		return 1;
-	int ret = 0;
-	ret += sol(i + 1, j);
-	arr[i][j] = 'X';
-	ret += sol(i, j + 1);
-	arr[i][j] = '*';
-	return ret;
+const int N = 1e3 + 2;
+int dp[N][N];
+int solve(int i, int j){
+	if (!valid(i, j))return 0;
+	if (i + 1 == n && j + 1 == w)return 1;
+	int &ret = dp[i][j]; if (~ret)return ret;
+	return ret = (solve(i + 1, j) + solve(i, j + 1));
 }
 int main(){
 	K_K();
-	int t;
-	cin >> t;
-	bool flag = 0;
-	arr.resize(N, vector<char>(N));
+	int t; cin >> t;
 	while (t--){
-		cin >> n >> w;
-		for (int i = 0; i <= n; i++){
-			for (int j = 0; j <= w; j++){
-				arr[i][j] = '*';
-			}
-		}
-		int x;
-		string s;
-		cin.ignore();
+		cin >> n >> w; arr = vector<vector<int>>(n, vector<int>(w, 1));
 		for (int i = 0; i < n; i++){
-			getline(cin, s);
-			vector<int>v;
-			stringstream r(s);
-			while (r >> x){
-				v.push_back(x);
-			}
-			for (int i = 1; i < sz(v); i++)
-				arr[v[0]][v[i]] = 'X';
+			string s; int a, x; cin >> a;
+			getline(cin, s); stringstream r(s);
+			while (r >> x)
+				arr[a - 1][x - 1]--;
 		}
-		if (flag)cout << endl << endl;
-		cout << sol(1, 1);
-		flag = 1;
+		clr(dp, -1);  cout << solve(0, 0) << endl; if (t)cout << endl;
 	}
-	cout << endl;
 }
