@@ -54,8 +54,7 @@ int main(){
 		for (int i = 0; i < n; i++){
 			string s; int a, x; cin >> a;
 			getline(cin, s); stringstream r(s);
-			while (r >> x)
-				arr[a - 1][x - 1]--;
+			while (r >> x) arr[a - 1][x - 1]--;
 		}
 		clr(dp, -1);  cout << solve(0, 0) << endl; if (t)cout << endl;
 	}
