@@ -1,0 +1,35 @@
+﻿// Dijkistra one source shortest path, O(nlog(n))
+int n, m, src, tar;
+vector<vector<pair<int, int>>>adj;
+int dijkistra(){
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>pq;
+	pq.push({ 0, src }); vector<int>dis(n, oo); dis[src] = 0;
+	while (sz(pq)){
+		pair<int, int>u = pq.top(); pq.pop();
+		if (u.second == tar)return u.first;
+		if (dis[u.second] != u.first)continue;
+		for (auto v : adj[u.second]){
+			if (dis[v.second] > dis[u.second] + v.first){
+				dis[v.second] = dis[u.second] + v.first;
+				pq.push({ dis[v.second], v.second });
+			}
+		}
+	}
+	return -1;
+}
+int main(){
+	K_K();
+	int t; cin >> t;
+	while (t--){
+		cin >> n >> m >> src >> tar;
+		adj = vector<vector<pair<int, int>>>(n);
+		while (m--){
+			int u, v, c; cin >> u >> v >> c;
+			adj[--u].push_back({ c, --v });
+			adj[v].push_back({ c, u });
+		}
+		src--; tar--; int ans = dijkistra();
+		if (ans == -1)cout << "NONE\n";
+		else cout << ans << endl;
+	}
+}

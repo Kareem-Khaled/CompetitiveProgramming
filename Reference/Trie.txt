@@ -1,0 +1,41 @@
+﻿// Trie - to present a string in a graph
+class Trie{
+private:
+	struct node{
+		node *child[26]; bool leaf;
+	};
+	node* root;
+public:
+	Trie(){
+		root = create();
+	}
+	node* create(){
+		node* nd = new node();
+		for (int i = 0; i < 26; i++)
+			nd->child[i] = NULL;
+		nd->leaf = 1;
+		return nd;
+	}
+	void add(string s){
+		node *nd = root;
+		for (int i = 0; i < sz(s); i++){
+			if (nd->child[s[i] - 'a'] == NULL){
+				nd->leaf = 0;
+				nd->child[s[i] - 'a'] = create();
+			}
+			nd = nd->child[s[i] - 'a'];
+		}
+	}
+	bool isPrefix(string s){
+		node *nd = root;
+		for (int i = 0; i < sz(s); i++)
+			nd = nd->child[s[i] - 'a'];
+		return !nd->leaf;
+	}
+};
+
+int main(){
+	K_K();
+	Trie trie = Trie();
+
+}

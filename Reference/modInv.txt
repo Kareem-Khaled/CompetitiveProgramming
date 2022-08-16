@@ -1,0 +1,73 @@
+﻿/*
+██╗  ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗        ██╗  ██╗██╗  ██╗ █████╗ ██╗     ███████╗██████╗
+██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║        ██║ ██╔╝██║  ██║██╔══██╗██║     ██╔════╝██╔══██╗
+█████╔╝ ███████║██████╔╝█████╗  █████╗  ██╔████╔██║        █████╔╝ ███████║███████║██║     █████╗  ██║  ██║
+██╔═██╗ ██╔══██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╔╝██║        ██╔═██╗ ██╔══██║██╔══██║██║     ██╔══╝  ██║  ██║
+██║  ██╗██║  ██║██║  ██║███████╗███████╗██║ ╚═╝ ██║███████╗██║  ██╗██║  ██║██║  ██║███████╗███████╗██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+Believe in yourself ,( try and try and then try ), You can do it
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#define endl "\n"
+#define clr(arr, x) memset(arr, x, sizeof arr)
+#define all(v) v.begin(),v.end()
+#define allr(s) s.rbegin(),s.rend()
+#define rt(s) return cout<<s,0
+#define sz(s)	(int)(s.size())
+#define OO 0x3f3f3f3f3f3f3f3fLL
+const int oo = 0x3f3f3f3f;
+using namespace std;
+typedef long long ll;
+int dx[] { 1, -1, 0, 0, 1, 1, -1, -1 };
+int dy[] { 0, 0, 1, -1, 1, -1, 1, -1 };
+void K_K(){
+#ifndef ONLINE_JUDGE
+	freopen("in.txt", "r", stdin);
+	freopen("out.txt", "w", stdout);
+#endif  !ONLINEJUDGE
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
+const int M = 1e9 + 7;
+ll power(ll x, ll k){
+	ll ret = 1;
+	while (k){
+		if (k & 1) ret = (ret*x) % M;
+		k >>= 1; x = (x*x) % M;
+	}
+	return ret;
+}
+vector<ll>fact, mmi;
+void modInv(ll n) {
+	fact = mmi = vector<ll>(n + 1);
+	fact[0] = mmi[0] = 1LL;
+	for (ll i = 1; i < n; i++){
+		fact[i] = (fact[i - 1] * i) % M;
+		mmi[i] = power(fact[i], M - 2);
+	}
+}
+int main(){
+	K_K();
+	modInv(1e6 + 5); ll ans = 0;
+	ll x, y, n; cin >> x >> y >> n;
+	map<vector<int>, bool> vis;
+	for (ll i = 0; i <= n; i++){
+		ll cur = x*i + (n - i)*y;
+		bool flag = 1;
+		while (cur){
+			if (cur % 10 != x && cur % 10 != y){
+				flag = 0; break;
+			}
+			cur /= 10;
+		}
+		flag &= (vis.find({ x, y, i, n - i }) == vis.end());
+		if (flag){
+		    ll tmp = (fact[n] % M);
+		    tmp = (tmp * (mmi[i] % M)) % M;
+		    tmp = (tmp * (mmi[n - i] % M)) % M;
+			ans = ((ans % M) + (tmp % M)) % M;
+		}
+		vis[{x, y, i, n - i}] = 1;
+	}
+	cout << ans;
+}

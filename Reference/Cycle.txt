@@ -1,0 +1,40 @@
+bool cycle = 0;
+vector<pair<int, int>>backEdge;
+void dfs(int node,int par){
+	vis[node] = 1;
+	//if (sz(gr[node]) == 1) // undirect if direct == 0
+	//leafs.push_back(node);
+	//com.push_back(node);
+	//path[node] = id;
+	for (auto it : gr[node]){ // Cycle
+		if (!vis[it])
+			dfs(it, node);
+		else if (it != par&&par!=-1){
+			cycle = 1;
+			backEdge.push_back({ it, node });
+		}
+	}
+}
+
+
+
+bool cycle = 0;
+bool inStack[1000];
+vector<pair<int, int>>backEdge;
+void dfs(int node,int par){
+	vis[node] = 1;
+	//if (sz(gr[node]) == 1) // undirect if direct == 0
+	//leafs.push_back(node);
+	//com.push_back(node);
+	//path[node] = id;
+	inStack[node] = 1;
+	for (auto it : gr[node]){ // Cycle
+		if (!vis[it])
+			dfs(it, node);
+		else if (it != par&&par!=-1&&inStack[it]){
+			cycle = 1;
+			backEdge.push_back({ it, node });
+		}
+	}
+	inStack[node] = 0;
+}

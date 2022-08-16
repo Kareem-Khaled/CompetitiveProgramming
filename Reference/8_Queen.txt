@@ -1,0 +1,38 @@
+// 8 Queen
+int v[100][100],c = 0;
+const int mx = 8;
+int ithrow[mx][mx];
+bool col[mx], rdig[2 * mx + 1], ldig[2 * mx + 1];
+void solve(int r){
+	if (r == 8){
+		c++;
+		for (int i = 0; i < mx; i++){
+			for (int j = 0; j < mx; j++){
+				cout << ithrow[i][j] << " ";
+			}
+			cout << endl;
+		}
+		cout << endl << endl;
+		return;
+	}
+	for (int c = 0; c < 8; c++){
+		if (!col[c] && !rdig[c + r] && !ldig[mx + c - r]){
+			ithrow[r][c] = 1;
+			col[c] = 1; rdig[c + r] = 1; ldig[mx + c - r] = 1;
+			solve(r + 1);
+			col[c] = 0; rdig[c + r] = 0; ldig[mx + c - r] = 0;
+			ithrow[r][c] = 0;
+		}
+	}
+}
+
+int main(){
+	K_K();
+	int t; cin >> t;
+	while (t--){
+		for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++)
+			cin >> v[i][j];
+	}
+	solve(0);
+}

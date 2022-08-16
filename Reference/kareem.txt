@@ -1,0 +1,48 @@
+// Graph 0
+
+vector<vector<int>> adj;
+vector<bool> vis;
+int mx = 0;
+void dfs(int node, int dep) {
+	mx = max(mx, dep);
+	vis[node] = 1;
+	for (int child : adj[node])
+		if (!vis[child])
+			dfs(child, dep + 1);
+}
+
+int bfs(int src, int dest) {
+	vector<int> dis(sz(adj), oo);
+	queue<int> q; q.push(src);
+	dis[src] = 0;
+	while (!q.empty()) {
+		int cur = q.front(); q.pop();
+		for (int child : adj[cur]) {
+			if (dis[child] > dis[cur] + 1) {
+				dis[child] = dis[cur] + 1;
+				q.push(child);
+			}
+		}
+	}
+	return dis[dest];
+}
+
+vector<vector<int>> dis;
+void bfs(int src) {
+	dis[src] = vector<int>(sz(adj), oo);
+	vector<int>& rt = dis[src];
+	queue<int> q; q.push(src);
+	rt[src] = 0;
+	while (!q.empty()) {
+		int cur = q.front(); q.pop();
+		for (int child : adj[cur]) {
+			if (rt[child] > rt[cur] + 1) {
+				rt[child] = rt[cur] + 1;
+				q.push(child);
+			}
+		}
+	}
+}
+int main() {
+	run();
+}

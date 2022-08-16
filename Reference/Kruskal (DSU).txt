@@ -1,0 +1,37 @@
+﻿// Kruskal (DSU, MST) O(n)
+vector<int>par;
+vector<pair<int, pair<int, int>>>edges;
+int findpar(int u){
+	if (u == par[u])return u;
+	return par[u] = findpar(par[u]);
+}
+void join(int u, int v){
+	u = findpar(u); 
+	v = findpar(v);
+	if (u != v)
+                     par[u] = v;
+}
+ll kruskal(){
+	ll ret = 0;
+	sort(all(edges)); 
+	iota(all(par), 0);
+	for (int i = 0; i < sz(edges); i++){
+		int u = findpar(edges[i].second.first);
+		int v = findpar(edges[i].second.second);
+		if (u != v){
+			ret += edges[i].first; 
+			join(u, v);
+		}
+	}
+	return ret;
+}
+int main(){
+	K_K();
+	int n, m; cin >> n >> m;
+	par = vector<int>(n);
+	for (int i = 0; i < m; i++){
+		int u, v, c; cin >> u >> v >> c;
+		edges.push_back({ c, { --u, --v } });
+	}
+	cout << kruskal();
+} 

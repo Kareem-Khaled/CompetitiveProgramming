@@ -1,0 +1,9 @@
+string execute(std::string cmd)
+{
+	string file_name = "result.txt";
+	system((cmd + " > " + file_name).c_str()); // redirect output to file
+
+	// open file for input, return string containing characters in the file
+	std::ifstream file(file_name);
+	return{ std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>() };
+}

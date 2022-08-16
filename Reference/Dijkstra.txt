@@ -1,0 +1,40 @@
+﻿// Dijkstra
+
+struct edge {
+	int from, to, w;
+
+	edge(int from, int to, int w) : from(from), to(to), w(w) {}
+
+	bool operator < (const edge & e) const {
+		return e.w < w;
+	}
+};
+int n;
+vector<int>dist, pre;
+vector<vector<edge>>adjL;
+int Dijkstra(int src, int dest = -1){	// O(E logV){
+	dist[src] = 0;
+	priority_queue<edge> pq;
+	pq.push(edge(-1, src, 0));
+
+	while (sz(pq)) {
+		edge e = pq.top();	pq.pop();
+		if (e.w > dist[e.to])
+			continue;
+		pre[e.to] = e.from;
+		for (int j = 0; j < sz(adjL[e.to]); j++) {
+			edge ne = adjL[e.to][j];
+			if (dist[ne.to] > dist[ne.from] + ne.w) {
+				ne.w = dist[ne.to] = dist[ne.from] + ne.w;
+				pq.push(ne);
+			}
+		}
+	}
+	return dest == -1 ? -1 : dist[dest];
+}
+int main(){
+	cin >> n;
+	adjL = vector<vector<edge>>(n + 1);
+	dist = vector<int>(n + 1, oo);
+	pre = vector<int>(n + 1, -1);
+}

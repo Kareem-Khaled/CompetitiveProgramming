@@ -1,0 +1,25 @@
+//Longest Palindrome String 
+
+string str;
+int s, e, mx = 0, n;
+bool ispal[1000][1000];
+void makepal(int i, int j){
+	while (i >= 0 && j < n&&str[i] == str[j])
+		i--,j++;
+	i++;
+	j--;
+	if (j - i + 1>mx){
+		mx = j - i + 1;
+		s = i; e = j;
+	}
+}
+int main(){
+	cin >> str;
+	n = str.size();
+	for (int i = 0; i < n; i++){
+		makepal(i, i); makepal(i, i + 1);
+	}
+	for (int i = s; i <= e; i++)
+		cout << str[i];
+	cout << endl;
+}

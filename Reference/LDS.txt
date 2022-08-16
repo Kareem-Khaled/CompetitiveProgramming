@@ -1,0 +1,16 @@
+// Longest Decreasing Sequence (LDS)
+
+int n;
+vector<int> arr;
+int LDS(){
+	vector<int> lds(n, 1);
+	for (int i = 1; i < n; i++){
+		for (int j = 0; j < i; j++){
+			if (arr[i] < arr[j] && lds[i] < lds[j] + 1)
+				lds[i] = lds[j] + 1;
+		}
+	}
+	return *max_element(all(lds));
+}
+
+// we can also reverse array and run LIS it is the same thing

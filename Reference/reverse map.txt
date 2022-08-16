@@ -1,0 +1,8 @@
+ // Create a map reverse iterator 
+    map<int, string>::reverse_iterator it; 
+  
+    // rbegin() returns to the last value of map 
+    for (it = mymap.rbegin(); it != mymap.rend(); it++) { 
+        cout << "(" << it->first << ", " 
+             << it->second << ")" << endl; 
+    } 

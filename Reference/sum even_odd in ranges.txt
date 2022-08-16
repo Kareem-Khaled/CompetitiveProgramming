@@ -1,0 +1,23 @@
+﻿// sum even & odd in ranges
+
+ll Al(int n){
+	return (1LL * n * (n + 1));
+}
+ll Ev(int l, int r){
+	return Al(r / 2) - Al((l - 1) / 2);
+}
+ll Od(int n){
+	ll x = (n + 1) / 2;
+	return x * x;
+}
+int main(){
+	K_K();
+	int a, b;
+	cin >> a >> b;
+	if (a > b)
+		swap(a, b);
+ 	ll all = (Al(b) - Al(a - 1)) / 2;
+	ll ev = Ev(a, b);
+	ll od = Od(b) - Od(a - 1);
+	cout << all << endl << ev << endl << od;
+}

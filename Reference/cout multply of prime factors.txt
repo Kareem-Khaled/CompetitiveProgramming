@@ -1,0 +1,40 @@
+//Cout Multply of prime factor
+
+const int N = 1e6;
+
+void fac(ll n)
+{
+    for(ll i=2;i*i<=n;i++)
+        while(n%i==0)
+        {
+            n/=i;
+        if(n==1)
+            cout<<i;
+        else
+            cout<<i<<" x ";
+        }
+        if(n>1)
+            cout<<n<<endl;
+        else
+            cout<<endl;
+}
+
+
+int main()
+{
+    //    file();
+    fast();
+
+        int n;
+    while(cin>>n&&n)
+    {
+        cout<<n<<" = ";
+        if(n<0)
+        {
+            n*=-1;
+            cout<<"-1 x ";
+        }
+        fac(n);
+
+    }
+}

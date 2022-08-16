@@ -1,0 +1,62 @@
+﻿- instead of using bool vis and reset it by 0 every time you can use int array
+and don't reset it even one time by make vis[i]=i;
+and check if(vis[i]!=i) that's mean i not vist
+
+- swap to elements from 2 arrays to make thim equals 
+sol: make frq array for one of the elemnts and check if 
+
+
+frq[(sum1-sum2)/2-arr2[i]] there is exist 
+	*if(sum1-sum2)is odd) we can't 
+
+
+- in binary string problems (10101011100)
+to generaate sequance try to make it all 1010101010
+and then but all zeros after the first one
+and put all ones before the first one
+
+
+- to remove on element in prefix sum array you can use:
+arr[n] - (arr[i] - arr[i - 1]);
+
+- floor ==> a/b
+- ceil  ==> (a + b-1)/b
+- round ==> (a + b/2)/b
+- gcd ==> a-((a/b)*b)
+- int h = hypot(x,y);       // h = sqrt(x2+y2)
+
+
+- check if bit x set or not                             ((n >> x) & 1)
+- Toggling a bit x			   (n ^= (1 << x))
+- turn bit x on			   (n ^= ~n & (1 << x))
+- turn bit x off                                               (n ^= n & (1 << x))
+
+// a + b - (a^b) = 2*(a&b);
+
+- p^n has (n+1)divisors for any p:prime num
+
+- x*b^y = b^logb(x)+y
+
+---------------------
+multply two numbers:
+divide the 1st number by 2,
+rounding down the result
+and double the second number
+keep going till the 1st number gets down to 1 
+strike out all the rows in which the 1st number is even
+and add up whatever remains in the second column
+ex: 11*13 = 143
+11 13
+5   26
+2   52
+1   104
+13 + 26 + 104 = 143
+
+// (a + b) = (a ^ b) + 2 ∗ (a & b)
+
+// a^0 + a^1 + a^2 ... a^n ---->  (a^(n+1))-1/(a-1)
+----------------------------------------
+// remove repetied elements in devison
+
+(x/a)+(x/b)+(x/c)-(x/lcm(a,b))-(x/lcm(b,c))-(x/lcm(a,c))+(x/lcm(a,b,c))
+when paramertrs are (odd +) when (even -)

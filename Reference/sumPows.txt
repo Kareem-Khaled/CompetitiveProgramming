@@ -1,0 +1,7 @@
+﻿ll sumPows(ll a,int k){ // return a^1+a^2...a^k
+   if(k==0)
+      return 0;
+    if(k%2==1)
+    return a * (1 + sumPows(a,k-1));
+  ll half = sumPows(a,k/2);
+return half *(1+half-sumPows(a,k/2-1));

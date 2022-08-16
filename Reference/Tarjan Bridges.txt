@@ -1,0 +1,40 @@
+﻿//Tarjan find Bridges
+
+vector<vector<int>>adjList;
+vector<pair<int, int>>bridges;
+vector<int>low, dfn;
+int ndfn, n, m;
+void artBridges(int node, int par) {
+	low[node] = dfn[node] = ndfn++;
+
+	for (auto child : adjList[node]) {
+		if (child == par) continue;
+		if (!~dfn[child]) { // not visited
+			artBridges(child, node);
+			low[node] = min(low[node], low[child]);
+			if (low[child] == dfn[child])
+				bridges.push_back({ min(node, child), max(node, child) });
+		}
+		else
+			low[node] = min(low[node], dfn[child]);
+	}
+}
+int main(){
+	K_K();
+	cin >> n >> m;
+	adjList = vector<vector<int>>(n + 1);
+	for (int i = 0; i < m; i++) {
+		int f, t; cin >> f >> t;
+		adjList[f].push_back(t);
+		adjList[t].push_back(f);
+	}
+	low = dfn = vector<int>(n + 1, -1);
+	for (int i = 1; i <= n; i++) {
+		if (!~dfn[i])
+			artBridges(i, -1);
+	}
+	sort(all(bridges));
+	for (auto it : bridges){
+		cout << it.first << " - " << it.second << endl;
+	}
+}

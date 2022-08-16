@@ -1,0 +1,50 @@
+﻿// KMP : [..]$[...]i.............
+// Z : [..]$............i[...]
+vector<int>prfx, z;
+void buildPrifx(string s){
+	prfx = vector<int>(sz(s), 0);
+	int border = 0;
+	for (int i = 1; i < sz(s); i++){
+		while (border> 0 && s[i] != s[border])
+			border = prfx[border - 1];
+		if (s[i] == s[border]) border++;
+		prfx[i] = border;
+	}
+}
+void buildZ(string s){
+	z = vector<int>(sz(s), 0);
+	int l = 0, r = 0;
+	for (int i = 1; i < sz(s); i++){
+		int k = i - l;
+		if (i >= r || i + z[k] >= r){
+			l = i; r = max(r, i);
+			while (r < sz(s) && s[r - l] == s[r])r++;
+			z[i] = r - l;
+		}
+		else
+			z[i] = z[k];
+	}
+}
+int main(){
+	K_K();
+	int t; cin >> t; bool flag = 0;
+	while (t--){
+		string s, p; cin >> s >> p; 
+		s = p + '#' + s; buildPrifx(s); buildZ(s);
+		int n = sz(s), m = sz(p);
+		vector<int>ans;
+		for (int i = m + 1; i < n; i++){
+			if (prfx[i] == m)
+				ans.push_back(i - 2 * m + 1);
+			if (z[i] == m)
+				ans.push_back(i - m);
+		}
+		if (flag)cout << endl; flag = 1;
+		if (sz(ans)){
+			cout << sz(ans) << endl;
+			for (auto it : ans)cout << it << ' ';
+			cout << endl;
+		}
+		else cout << "Not Found\n";
+	}
+}

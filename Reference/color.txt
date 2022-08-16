@@ -1,0 +1,16 @@
+﻿void changeColor(int desiredColor){
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), desiredColor);
+}
+int main(){
+	changeColor(9); // Set the color back to white. 
+
+	cout << "Hello "; // Will print "Hello " in the default white color. 
+
+	changeColor(12); // Change the color to red. 
+
+	cout << " world!"; // Will print " world!" in red. 
+
+	changeColor(10); // Set the color back to white. 
+
+	system("pause");
+}

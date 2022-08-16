@@ -1,0 +1,15 @@
+// LIS - O(N log(N))
+int LIS(){
+	vector<int> tail(n, 0);
+	int length = 1;
+	tail[0] = arr[0];
+
+	for (int i = 1; i < n; i++) {
+		auto it = lower_bound(tail.begin(), tail.begin() + length, arr[i]);
+		if (it == tail.begin() + length)
+			tail[length++] = arr[i];
+		else
+			*it = arr[i];
+	}
+	return length;
+}

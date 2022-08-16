@@ -1,0 +1,22 @@
+﻿vector<vector<int>>adjL;
+const int N = 1e4 + 4;
+bool vis[N]; int lst = 0, dis, ans;
+void dfs(int node, int cur){
+	if (cur > dis) dis = cur, lst = node;
+	vis[node] = 1; ans = max(ans, cur);
+	for (auto child : adjL[node]){
+		if (!vis[child])
+			dfs(child, cur + 1);
+	}
+}
+int main() {
+	K_K();
+	int n; cin >> n;
+	adjL = vector<vector<int>>(n + 1);
+	for (int i = 1; i < n; i++){
+		int u, v; cin >> u >> v;
+		adjL[u].push_back(v);
+		adjL[v].push_back(u);
+	}
+	dfs(1, 0); clr(vis, 0); dfs(lst, 0); cout << ans;
+}

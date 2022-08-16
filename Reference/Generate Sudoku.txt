@@ -1,0 +1,14 @@
+﻿	int arr[9][9], id = 3;
+	for (int i = 0; i < 9; i++) cin >> arr[0][i];
+	for (int i = 1; i < 9; i++){
+		if (i % 3 == 0) id++;
+		for (int j = 0; j < 9; j++, id++){
+			arr[i][j] = arr[0][id % 9];
+		}
+		id += 3;
+	}
+	for (int i = 0; i < 9; i++){
+		for (int j = 0; j < 9; j++)
+			cout << arr[i][j] << ' ';
+		cout << endl;
+	}

@@ -1,0 +1,183 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#define endl "\n"
+#define ss cout<<endl;system("pause");
+#define all(v) v.begin(),v.end()
+#define allr(s) s.rbegin(),s.rend()
+#define rt(s) return cout<<s,0
+#define watch(x) cout<<(#x)<<" = "<<x<<endl
+#define sz(s)	(int)(s.size())
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef unsigned long long ull;
+//x = xDegrees*3.14159265 / 180;
+int dx[] { 1, -1, 0, 0, 1, 1, -1, -1 };
+int dy[] { 0, 0, 1, -1, 1, -1, 1, -1 };
+void K_K()
+{
+#ifndef ONLINE_JUDGE
+	freopen("in.txt", "r", stdin);
+	freopen("out.txt", "w", stdout);
+#endif  !ONLINEJUDGE
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
+
+ll gcd(ll a, ll b) {
+	return b == 0 ? abs(a) : gcd(b, a % b);
+}
+ll lcm(ll a, ll b) {
+	return a / gcd(a, b) * b;
+}
+ll nCr(ll n, ll r){
+	ll ans = 1;
+	ll div = 1; // r! 
+	for (ll i = r + 1; i <= n; i++){
+		ans = ans * i;
+		ans /= div;
+		div++;
+	}
+	return ans;
+}
+ll poow(ll x, ll k, ll mod){
+	ll ret = 1;
+	while (k){
+		if (k & 1) ret = (ret*x) % mod;
+		k >>= 1; x = (x*x) % mod;
+	}
+	return ret;
+}
+class validate{
+public:
+	bool isword(string x){
+		for (int i = 0; i < x.size(); i++){
+			if (!isalpha(x[i])){
+				return 0;
+			}
+		}
+		return 1;
+	}
+
+	bool isnum(string x){
+		if (x[0] == '0'){
+			return 0;
+		}
+		for (int i = 0; i < x.size(); i++){
+			if (!isdigit(x[i])){
+				return 0;
+			}
+		}
+		return 1;
+	}
+	bool ismobile(string x){
+
+		if (x.size() != 11){
+			return 0;
+		}
+		if (!isnum(x.substr(1))){
+			return 0;
+		}
+		return 1;
+	}
+
+	long long convert_to_num(string x){
+		// 1234
+		int num = 0;
+		for (int i = 0; i < x.size(); i++){
+			num = num * 10 + (x[i] - '0');
+		}
+		return num;
+	}
+
+};
+
+class worker :public validate {
+
+private:
+	string name;
+	string user_name;
+	string password;
+	long long mobile;
+public:
+	worker(){
+		name = "";
+		user_name = "";
+		password = "";
+		mobile = 0;
+	}
+	worker(string name, string user_name, string password, long long mobile){
+		this->name = name;
+		this->user_name = user_name;
+		this->password = password;
+		this->mobile = mobile;
+	}
+	int set_data(string name, string user_name, string password, string mobile){
+		if (isword(name) == 0){
+			return 1; //name is not valid 
+		}
+		if (ismobile(mobile) == 0){
+			return 2; //mobile is not valid 
+		}
+		this->name = name;
+		this->user_name = user_name;
+		this->password = password;
+		this->mobile = convert_to_num(mobile);
+		return 0; //data are true
+	}
+
+	void get_data(string &name, string &user_name, string &password, long long &mobile){
+		name = this->name;
+		user_name = this->user_name;
+		password = this->password;
+		mobile = this->mobile;
+	}
+
+
+	// this is Deconstucor
+	~worker(){
+		worker();
+	}
+
+};
+class workers :public validate{
+private: 
+	vector<worker>data;
+public:
+	void add(worker w){
+		if (w.ismobile())
+		data.push_back(w);
+	}
+	int remove(long long mobile){
+		int index = -1;
+		bool ok = 0;
+		for (int i = 0; i < data.size(); i++)
+		{
+			string name, user_name, password;
+			long long mob;
+			data[i].get_data(name, user_name, password, mob);
+			if (mob == mobile){
+				index = i;
+				ok = 1;
+				break;
+			}
+		}
+		if (index == -1){
+			return index;
+		}
+		data.erase(data.begin() + index);
+		return 1;
+
+	}
+	int search(string name ="" , string user_name="" ,long long mobile){
+
+	}
+
+
+};
+
+int main()
+{
+	K_K();
+
+	//	ss;
+}

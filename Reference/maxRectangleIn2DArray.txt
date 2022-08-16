@@ -1,0 +1,24 @@
+max-RectangleIn-2DArray
+int n; vector<vector<int>>arr;
+int sol2(vector<int>arr) {
+	int sum = 0, mx = -oo;
+	for (int i = 0; i < n; i++){
+		sum += arr[i];
+		sum = max(sum, 0);
+		mx = max(mx, sum);
+	}
+	return mx;
+}
+
+int sol(){
+	int sum = 0, mx = -oo;
+	for (int i = 0; i < n; i++){
+		vector<int>temp(n + 1, 0);
+		for (int j = i; j < n; j++){
+			for (int k = 0; k < n; k++)
+				temp[k] += arr[k][j];
+			mx = max(mx, sol2(temp));
+		}
+	}
+	return mx;
+}

@@ -1,0 +1,28 @@
+int turnOnLastZero(int S) {
+	return S | (S + 1);
+}
+int turnOffLastBit(int S) {
+	return S & (S - 1);
+}
+bool isPowerOfTwo(int num) {
+	return !(num & (num - 1)) && (num);
+}
+int turnOnLastConsecutiveZeroes(int S) {
+	return S | (S - 1);
+}
+int turnOffLastConsecutiveBits(int S) {
+	return S & (S + 1);
+}
+
+// print the value of bit x
+((n >> x) & 1);
+
+// change bit x to 1
+n ^= ~n & (1 << x);
+
+// change bit x to 0 
+n ^= n & (1 << x);
+
+// flib bit x
+n ^= (1 << x);
+

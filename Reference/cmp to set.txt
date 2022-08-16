@@ -1,0 +1,10 @@
+// cmp to set
+struct cmp{
+	bool operator() (const pair<int, int>&p1, const pair<int, int>&p2)const{
+		int a = p1.second - p1.first;
+		int b = p2.second - p2.first;
+		if (a == b)
+			return p1.first < p2.first;
+		return a>b;
+	}
+};

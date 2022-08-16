@@ -1,0 +1,7 @@
+	string s;
+	int x;
+	getline(cin, s);
+	vector<int>v;
+	stringstream r(s);
+	while (r >> x)
+		v.push_back(x);

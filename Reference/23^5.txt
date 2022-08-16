@@ -1,0 +1,26 @@
+//23^5 (recursion)
+
+
+int arr[5];
+bool sol(int n=0,int i=0){
+    if(i==5)
+        return n==5;
+    
+    return(sol(n+arr[i],i+1)||sol(n*arr[i],i+1)||sol(n-arr[i],i+1));
+}
+
+
+int main(){
+    bool b=0;
+   for(int i=0;i<5;i++)
+    cin>>arr[i];
+
+    sort(arr,arr+5);
+    do{
+            if(sol())
+            b=1;
+
+    }while(next_permutation(arr,arr+5));
+    if(b)cout<<"Y";
+    else cout<<"N";
+}

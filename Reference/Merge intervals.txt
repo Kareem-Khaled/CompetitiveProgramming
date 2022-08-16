@@ -1,0 +1,20 @@
+// Merge intervals
+
+vector<pair<ll, ll>>v, vv;
+	int n;
+	cin >> n;
+	v.resize(n);
+	for (int i = 0; i < n; i++)cin >> v[i].first >> v[i].second;
+	sort(all(v));
+	pair<ll, ll>p;
+	for (int i = 0; i < sz(v); i++){
+		p.first = v[i].first; p.second = v[i].second;
+		while (i + 1 < sz(v) && v[i + 1].first >= p.first && v[i + 1].first <= p.second) {
+			p.first = min(p.first, v[i].first);
+			p.second = max(p.second, v[i + 1].second);
+			i++;
+		}
+		vv.push_back({ p });
+	}
+	for (auto it : vv)cout << it.first << " " << it.second << endl;
+}

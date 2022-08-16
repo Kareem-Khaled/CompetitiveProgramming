@@ -1,0 +1,17 @@
+﻿// convert char grid to int grid
+
+int main(){
+	/* convert char grid to int grid
+
+	...S.                     		  00010
+	###.#			  22202
+	.S..#			  01002
+
+	*/
+	char arr[10][10];
+	int arr1[10][10];
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 5; j++)
+			arr1[i][j] = string(".S#").find(arr[i][j]);
+	}
+}

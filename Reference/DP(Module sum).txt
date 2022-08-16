@@ -1,0 +1,43 @@
+// Dp (Module Sum)
+
+int n,m;
+
+int arr[1000005];
+int mem[1000][1000][2];
+
+int sol(int i,int s,int c)
+{
+    if(i>=n)
+    {
+      if(s%m==0&&c)
+	   return 1;
+       return 0;
+    }
+
+    int &ret=mem[i][s][c];
+
+    if(ret!=-1)
+        return ret;
+
+    ret=sol(i+1,(s+arr[i])%m,1);
+    ret=ret||sol(i+1,s,c);
+
+    return ret;
+
+}
+
+int main()
+{
+    //    file();
+    fast();
+    cin>>n>>m;
+    
+    for(int i=0;i<n;i++)
+          cin>>arr[i];
+    if(n>=m)
+    rt("YES");
+    memset(mem,-1,sizeof mem );
+
+    if(sol(0,0,0))cout<<"YES";
+    else cout<<"NO";
+}

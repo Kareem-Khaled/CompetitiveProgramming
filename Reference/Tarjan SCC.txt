@@ -1,0 +1,45 @@
+﻿// Tarjan to find SCC O(V + E)
+
+vector<vector<int>>adjList, comps;
+vector<int>inSt, low, dfn;
+stack<int>st; int ndfn, n, m;
+void tarjan(int node) {
+	low[node] = dfn[node] = ndfn++; 
+	inSt[node] = 1; st.push(node);
+
+	for (auto child : adjList[node]) {
+		if (!~dfn[child]) {// not visited
+			tarjan(child);
+			low[node] = min(low[node], low[child]);
+		}
+		else if (inSt[child]) // connected with me in the same call
+			low[node] = min(low[node], dfn[child]);
+	}
+
+	if (low[node] == dfn[node]) { // root for SCC
+		comps.push_back(vector<int>()); int x = -1;
+		while (x != node) {
+			x = st.top(); st.pop(); inSt[x] = 0;
+			comps.back().push_back(x);
+		}
+	}
+}
+int main(){
+	K_K();
+	cin >> n >> m;
+	adjList = vector<vector<int>>(n + 1);
+	for (int i = 0; i < m; i++) {
+		int f, t; cin >> f >> t;
+		adjList[f].push_back(t);
+	}
+	inSt = low = dfn = vector<int>(n + 1, -1);
+	for (int i = 1; i <= n; i++) {
+		if (!~dfn[i])
+			tarjan(i);
+	}
+	for (auto it : comps){
+		for (auto itt : it)
+			cout << itt << ' ';
+		cout << endl;
+	}
+}

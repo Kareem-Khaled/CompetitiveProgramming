@@ -1,0 +1,15 @@
+﻿// sum nums in range divs by x
+	int a, b, x;
+	cin >> a >> b >> x;
+	if (a > b)
+		swap(a, b);
+	int l = a - (a % x), r = b;
+	int rem = (b + x) % x;
+	if (rem)
+		r = b + x - rem;
+	if (l < a)
+		l += x;
+	if (r > b)
+		r -= x;
+	int n = (b / x) - (a - 1) / x;
+	cout << 1LL * n * (l + r) / 2;

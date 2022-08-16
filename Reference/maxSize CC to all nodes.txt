@@ -1,0 +1,13 @@
+﻿// get maxSize CC to all nodes 
+
+vector<vector<int>>adjL;
+vector<int>Sz, mxSz; int n;
+void dfs(int node, int par) {
+	Sz[node] = 1; mxSz[node] = 0;
+	for (auto ch : adjL[node])
+	if (ch != par) {
+		dfs(ch, node); Sz[node] += Sz[ch];
+		mxSz[node] = max(mxSz[node], Sz[ch]);
+	}
+	mxSz[node] = max(mxSz[node], n - Sz[node]);// parsz
+}

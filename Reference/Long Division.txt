@@ -1,0 +1,23 @@
+﻿// Long Division
+
+int main(){
+	string s;
+	ll x, n = 0, rem = 0;
+	cin >> s >> x;
+	int dig = log10(x) + 1, i = -1;
+	while (++i < sz(s) && log10(n) + 1 < dig){
+		n *= 10;
+		n += (s[i] - '0');
+	}
+	bool flag = 0;
+	for (i; i < sz(s); i++){
+		if (n / x)
+			flag = 1;
+		if (flag)
+		cout << n / x;
+		rem = n%x;
+		n = rem * 10;
+		n += (s[i] - '0');
+	}
+	cout << n / x;
+}

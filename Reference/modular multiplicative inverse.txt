@@ -1,0 +1,24 @@
+﻿// modular multiplicative inverse
+// using to convert from a/b to a*b bcd (%) doesn't work with (/)
+// ex : (119 / 7)%11 = 6 ===> (119 * 8)%11 = 6
+// if mod is prime then mmi = num ^(mod-2)
+vector<string> split(const string &);
+
+const int M = 1e9 + 7; // it is prime
+ll power(ll x, ll k){
+    ll ret = 1;
+    while (k){
+        if (k & 1) ret = (ret*x) % M;
+        k >>= 1; x = (x*x) % M;
+    }
+    return ret;
+}
+vector<ll>fact,mmi;
+void solve(int n) {
+   fact = mmi = vector<ll>(s.size()+1);
+  fact[0] = mmi[0] = 1;
+  for(int i=1;i<=n;i++){ 
+    fact[i]=(fact[i-1]*i)%M;
+    mmi[i]=power(fact[i],M-2);
+  }
+}

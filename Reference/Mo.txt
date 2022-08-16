@@ -1,0 +1,47 @@
+﻿// MO 
+struct query{
+	int l, r, bi, qi;
+	query(int _l, int _r, int _qi, int sqr){
+		l = _l, r = _r, qi = _qi, bi = l / sqr;
+	}
+	bool operator < (const query& m)const {
+		if (bi == m.bi)return r < m.r;
+		return bi < m.bi;
+	}
+};
+const int N = 1e6 + 2;
+int n, res; vector<query>qu;
+vector<int>arr, ans, frq(N);
+void remove(int x){
+	frq[arr[x]]--;
+	if (!frq[arr[x]]) res--;
+}
+void add(int x){
+	if (!frq[arr[x]]) res++;
+	frq[arr[x]]++;
+}
+void solve(){
+	sort(all(qu));
+	int curL = 1, curR = 0;
+	for (auto it : qu){
+		while (curL < it.l) remove(curL++);
+		while (curL > it.l) add(--curL);
+		while (curR < it.r) add(++curR);
+		while (curR > it.r) remove(curR--);
+		ans[it.qi] = res;
+	}
+}
+int main(){
+	K_K();
+	cin >> n; arr = vector<int>(n);
+	for (auto &it : arr)cin >> it;
+	int q; cin >> q; 
+	int sqr = ceil(sqrt(n));
+	ans = vector<int>(q);
+	for (int i = 0; i < q; i++){
+		int l, r; cin >> l >> r;
+		qu.push_back(query(--l, --r, i, sqr));
+	}
+	solve(); 
+	for (auto it : ans)cout << it << endl;
+}

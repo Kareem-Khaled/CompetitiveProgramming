@@ -1,0 +1,57 @@
+// Ternary Search
+
+int arr[100];
+int start=0,end=n-1,m1,m2;
+while(start<=end)
+{
+    m1=start+(end-start)/3;
+    m2=end-(end-start)/3;
+    if(arr[m1]<arr[m2])
+    {
+        start=m1+1;
+    }
+    else 
+    {
+        end=m2-1;
+    }
+}
+
+/////////////////////////////////
+
+
+  int Arr[n], target, ans = -1;
+    int left = 0, right = n;  // set your range
+    for(int i = 0; i < 9; i++)
+        cin >> Arr[i];
+    cin >> target;
+    while (right - left > 3)  // We need 4 different positions
+    {
+        int Mid1 = left + (right - left) / 3;
+        int Mid2 = left + 2 * (right - left) / 3;
+
+        If (Arr[Mid1] == target)
+        {
+            ans = Mid1;
+            break;
+        }
+        else if (Arr[Mid2] == target)
+        {
+            ans = Mid2;
+            break;
+        }
+        else if (target > Arr[Mid2])
+            left = Mid2 + 1;
+        else if (target < Arr[Mid1])
+            right = Mid1 - 1;
+        else
+        {
+            left = Mid1 + 1;
+            right = Mid2 - 1;
+        }
+    }
+    for (int i = left; i <= right; ++i)// iterate on the remaining
+        if(target == Arr[i]) 
+        {
+            Ans = i;
+        }
+    cout << Ans; 

@@ -1,0 +1,31 @@
+ll power(ll x, ll k){
+	ll ret = 1;
+	while (k){
+		if (k & 1) ret = (ret*x) % mod;
+		k >>= 1; x = (x*x) % mod;
+	}
+	return ret;
+}
+ll FPower(ll n, ll m){
+	if (m == 0)
+		return 1;
+	ll ret = FPower(n, m >> 1) % mod;
+	ret = ((ret%mod)*(ret%mod)) % mod;
+	if (m&1)
+		ret = ((n%mod)*(ret%mod)) % mod;
+	return ret;
+}
+
+
+
+ll FP(ll x, ll k){
+	if (!k)
+		return 1;
+	ll m;
+	if (k % 2 == 0){
+		m = FP(x, k / 2);
+		return (m*m) % mod;
+	}
+	else
+		return x * FP(x, k - 1) % mod;
+}

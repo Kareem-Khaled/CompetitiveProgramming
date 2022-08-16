@@ -1,0 +1,75 @@
+﻿/*
+██╗  ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗        ██╗  ██╗██╗  ██╗ █████╗ ██╗     ███████╗██████╗
+██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║        ██║ ██╔╝██║  ██║██╔══██╗██║     ██╔════╝██╔══██╗
+█████╔╝ ███████║██████╔╝█████╗  █████╗  ██╔████╔██║        █████╔╝ ███████║███████║██║     █████╗  ██║  ██║
+██╔═██╗ ██╔══██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╔╝██║        ██╔═██╗ ██╔══██║██╔══██║██║     ██╔══╝  ██║  ██║
+██║  ██╗██║  ██║██║  ██║███████╗███████╗██║ ╚═╝ ██║███████╗██║  ██╗██║  ██║██║  ██║███████╗███████╗██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+Believe in yourself ,( try and try and then try ), You can do it
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#include<unordered_map>
+#define endl "\n"
+#define clr(arr, x) memset(arr, x, sizeof arr)
+#define all(v) v.begin(),v.end()
+#define allr(s) s.rbegin(),s.rend()
+#define rt(s) return cout<<s,0
+#define sz(s)	(int)(s.size())
+#define OO 0x3f3f3f3f3f3f3f3fLL
+#define oo 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+int dx[] { 1, -1, 0, 0, 1, 1, -1, -1 };
+int dy[] { 0, 0, 1, -1, 1, -1, 1, -1 };
+void K_K(){
+#ifndef ONLINE_JUDGE
+	freopen("in.txt", "r", stdin);
+	freopen("out.txt", "w", stdout);
+#endif  !ONLINEJUDGE
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
+int main(){
+	K_K();
+
+	string s; cin >> s;
+ 
+	int n = sz(s); s += s; string s2[2];
+
+	int cnt = 0, cnt1 = 0;
+
+	for (int i = 0; i < n * 2; i++){
+
+		s2[0] += (i & 1 ? '1' : '0');
+
+		s2[1] += (i & 1 ? '0' : '1');
+
+	}
+	for (int i = 0; i < n; i++){
+
+		cnt += (s2[0][i] != s[i]);
+
+		cnt1 += (s2[1][i] != s[i]);
+
+	}
+	
+	int ans = min(cnt, cnt1);
+
+	for (int i = n; i < n * 2; i++){
+	
+	cnt += (s2[0][i] != s[i]);
+	
+	cnt1 += (s2[1][i] != s[i]);
+
+	cnt -= (s2[0][i%n] != s[i%n]);
+
+	cnt1 -= (s2[1][i%n] != s[i%n]);
+
+	ans = min({ ans, cnt, cnt1 });
+
+	}
+
+	cout << ans;
+
+}

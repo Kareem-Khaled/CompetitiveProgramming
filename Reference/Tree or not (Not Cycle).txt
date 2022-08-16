@@ -1,0 +1,33 @@
+﻿// tree or not (Not Cycle)
+
+vector<vector<int>>gr;
+vector<bool>vis, inStack;
+bool cycle = 0;
+void dfs(int node){
+	vis[node] = 1; inStack[node] = 1;
+	for (auto child : gr[node]){
+		if (!vis[child])
+			dfs(child);
+		else if (inStack[child])
+			cycle = 1;
+	}
+	inStack[node] = 0;
+}
+int main(){
+	K_K();
+	int n, m; cin >> n >> m;
+	gr.resize(n + 1); vis.resize(n + 1);
+	inStack.resize(n + 1);
+	for (int i = 0; i < m; i++){
+		int u, v; cin >> u >> v;
+		gr[u].push_back(v);
+		gr[v].push_back(u);
+	}
+	for (int i = 1; i <= n; i++){
+		if (!vis[i])
+			dfs(i);
+	}
+	if (cycle)
+		rt("NO");
+	cout << "YES";
+}

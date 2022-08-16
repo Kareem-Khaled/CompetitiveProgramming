@@ -1,0 +1,55 @@
+// Kitchen plates (Dfs)
+
+vector<vector<int>>adj;
+vector<bool>vis,inStack;
+vector<int>top;
+bool cycle = 0;
+void dfs(int node)
+{
+	vis[node] = 1;
+	inStack[node] = 1;
+	for (auto child : adj[node])
+	{
+		if (!vis[child])
+			dfs(child);
+		else if (inStack[child])
+			cycle = 1;
+	}
+	/*
+	  for (int i = 0; i < sz(adj); i++)
+	 {
+		for (int j = 0; j < sz(adj[i]); j++)
+		{
+			if (!vis[adj[node][j]])
+				dfs(adj[node][j]);
+			else if (inStack[adj[node][j]])
+				cycle = 1;
+		}
+	 }
+	*/
+	top.push_back(node);
+	inStack[node] = 0;
+}
+int main()
+{
+	K_K();
+	char c1, c2, c3;
+	adj.resize(5);
+	vis.resize(5);
+	inStack.resize(5);
+	for (int i = 0; i < 5; i++)
+	{
+		cin >> c1 >> c2 >> c3;
+		if (c2 == '<')
+			adj[c3 - 'A'].push_back(c1 - 'A');
+		else
+			adj[c1 - 'A'].push_back(c3 - 'A');
+	}
+	for (int i = 0; i < 5; i++)
+		if (!vis[i])
+			dfs(i);
+		if (cycle)
+			rt("impossible");
+		for (auto it : top)
+			cout << (char)(it + 'A');
+}

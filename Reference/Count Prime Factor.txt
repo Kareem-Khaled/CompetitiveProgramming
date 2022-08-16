@@ -1,0 +1,29 @@
+// Count Prime Factor
+
+const int N = 1e6;
+ll primefactor(ll n)
+{
+        if(n==2)return 1;
+    ll c=0;
+    for(int i=2;i*i<=n;i++)
+    {
+        while(n%i==0)
+        {
+            c++;
+            n/=i;
+        }
+    }
+    if(n>1)
+        c++;
+    return c;
+}
+
+int main()
+{
+    //    file();
+    fast();
+    int n;
+    cin>>n;
+    cout<<primefactor(n);
+
+}

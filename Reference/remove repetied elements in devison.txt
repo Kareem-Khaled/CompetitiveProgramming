@@ -1,0 +1,3 @@
+(x/a)+(x/b)+(x/c)-(x/lcm(a,b))-(x/lcm(b,c))-(x/lcm(a,c))+(x/lcm(a,b,c))
+
+when paramertrs are (odd +) when (even -)

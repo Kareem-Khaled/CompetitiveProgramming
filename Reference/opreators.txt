@@ -1,0 +1,38 @@
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		int m;
+		cin >> m;
+		set<char>s{ '+', '-', '*', '/' };
+		map<char, set<char>>mp{ { 'A', s }, { 'B', s }, { 'C', s }, { 'D', s } };
+		while (m--)
+		{
+			int x, y, z;
+			char c, c1;
+			cin >> x >> c >> y >> c1 >> z;
+			s = set<char>();
+			for (auto it : mp[c])
+			{
+				if (it == '+'&&	x + y == z)
+					s.insert(it);
+				else if (it == '-'&&x - y == z)
+					s.insert(it);
+				else if (it == '*'&&x * y == z)
+					s.insert(it);
+				else if (it == '/' && (x / y == z) && (x%y == 0))
+					s.insert(it);
+			}
+			mp[c] = s;
+		}
+		for (auto it : mp)
+		{
+			if (sz(it.second) == 1)
+				cout << it.first << " = " << *it.second.begin() <<endl;
+			else
+				cout << it.first << " = impossible\n";
+		}
+	}
+	
+	//ss;
+}

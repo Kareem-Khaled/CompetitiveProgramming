@@ -1,0 +1,27 @@
+//Lis (recursion)
+
+ll n, arr[100000], mem[1000][1000];
+ll sol(ll i, ll pre)
+{
+	if (i == n)
+		return 0;
+	if (mem[i][pre] != -1)
+		return mem[i][pre];
+	ll path1 = sol(i + 1, pre);
+	ll path2 = 0;
+	if (arr[pre]<arr[i])
+		path2=sol(i + 1, i)+1;
+	return mem[i][pre] = max(path1, path2);
+}
+int main()
+{
+	K_K();
+	cin >> n;
+	for (int i = 0; i < n; i++)
+		cin >> arr[i];
+	memset(mem, -1, sizeof(mem));
+	arr[n] = -1;
+	cout<<sol(0, n);
+
+//		ss;
+}

@@ -1,0 +1,19 @@
+queue<pair<int, int>> qu;
+qu.push({ x0, y0 });
+	int sz = 1, depth = 0, done = false;
+	for (; !qu.empty() && !done; depth++, sz = qu.size()) {
+		while (!done && sz--) {
+			int x = qu.front().first, y = qu.front().second;
+			qu.pop();
+			for (int i = 0; i < 8; i++) {
+				int tox = x + dx[i], toy = y + dy[i];
+				if (!valid(tox, toy) || mp.find({ tox, toy }) == mp.end()) continue;
+				qu.push({ tox, toy });
+				mp.erase({ tox, toy });
+				if (tox == x1 && toy == y1) {
+					done = true;
+					break;
+				}
+			}
+		}
+	}

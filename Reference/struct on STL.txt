@@ -1,0 +1,16 @@
+﻿struct record {
+
+    int penalty, solve;
+
+    string name;
+ 
+   record(int p, int s, string n) :penalty(p), solve(s), name(n) {}
+  
+  bool operator <(const record& r)const {
+     
+   if (solve != r.solve)return solve < r.solve;
+    
+    return penalty < r.penalty;
+    }
+
+};

@@ -1,0 +1,10 @@
+﻿// maxXor in range
+	ll l, r; cin >> l >> r;
+	for (int i = 63; i >= 0; i--){
+		if ((l & (1LL << i)) != (r & (1LL << i)))
+			rt((1LL << (i + 1)) - 1);
+	}
+// max xor we can get is by set most of bits in first num to 0 & in the second to 1 
+// so we can find the power of 2 num because it is always 1 & 0...00s
+// in specfic range (l, r) the first bit from the left != in both l, r -
+// we can change in all right bits and be in the same range

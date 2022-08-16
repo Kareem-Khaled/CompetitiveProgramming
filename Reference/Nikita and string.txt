@@ -1,0 +1,28 @@
+﻿// Betiful idea
+
+int frqa[5005], frqb[5005];
+int main(){
+	K_K();
+	string s;
+	cin >> s;
+	s = 'K' + s;
+	for (int i = 1; i < sz(s); i++){
+		if (s[i] == 'a')
+			frqa[i]++;
+		else
+			frqb[i]++;
+	}
+	for (int i = 1; i <= sz(s); i++){
+		frqa[i] += frqa[i - 1];
+		frqb[i] += frqb[i - 1];
+	}
+	int ans = 0;
+	for (int i = 0; i <= sz(s); i++){
+		for (int j = i; j <= sz(s); j++){
+			int a = frqa[sz(s)] - frqa[j] + frqa[i];
+			int b = frqb[j] - frqb[i];
+			ans = max(a, ans);
+		}
+	}
+	cout << ans;
+}

@@ -1,0 +1,31 @@
+﻿// (Billman) one source shortest path, found negative cycle, O(n^2)
+int n, m;
+vector<pair<int, pair<int, int>>> adj;
+bool billman(){
+	vector<int>dis(n, oo); dis[0] = 0;
+	bool negCycle = 0;
+	for (int i = 0; i < n; i++){
+		bool flag = 0;
+		for (auto it : adj){
+			if (dis[it.second.second] > dis[it.second.first] + it.first){
+				dis[it.second.second] = dis[it.second.first] + it.first;
+				flag = 1;
+			}
+		}
+		if (!flag)break;
+		if (i == n - 1)negCycle = 1;
+	}
+	return negCycle;
+}
+int main(){
+	K_K();
+	int t; cin >> t;
+	while (t--){
+		cin >> n >> m; adj.clear();
+		while (m--){
+			int u, v, c; cin >> u >> v >> c;
+			adj.push_back({ c, { u, v } });
+		}
+		cout << (billman() ? "possible" : "not possible") << endl;
+	}
+}

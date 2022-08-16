@@ -1,0 +1,29 @@
+﻿vector<vector<int>>gr;
+bool vis[100005];
+vector<int>leafs;
+void dfs(int node){
+	vis[node] = 1;
+	if (sz(gr[node]) == 1)// undirect if direct == 0
+		leafs.push_back(node);
+	for (auto it : gr[node]){
+		if (!vis[it])
+			dfs(it);
+	}
+}
+int main(){
+	K_K();
+	int n, m;
+	cin >> n >> m;
+	gr.resize(n + 1);
+	for (int i = 0; i < m; i++){
+		int u, v; cin >> u >> v;
+		gr[u].push_back(v);
+		gr[v].push_back(u);
+	}
+	for (int i = 1; i <= n; i++){
+		if (!vis[i])
+			dfs(i);
+	}
+	for (auto it : leafs)
+		cout << it << endl;
+}

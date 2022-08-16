@@ -1,0 +1,16 @@
+﻿int main(){
+	int n; ll s; cin >> n >> s;
+	ll sum = 0, ans = 0;
+	unordered_map<ll, int>mp;
+	for (int i = 0; i < n; i++){
+		int tmp; cin >> tmp;
+		sum += tmp;
+		ans += (sum == s) + mp[sum - s];
+		mp[sum]++;
+	}
+	cout << ans;
+}
+
+// 5 2
+// -1 1 2 -1 1
+// 5

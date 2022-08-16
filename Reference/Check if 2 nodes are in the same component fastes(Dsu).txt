@@ -1,0 +1,33 @@
+﻿// Check if 2 nodes are in the same component fast (Dsu)
+
+vector<int>par, Sz;
+unordered_map<string, int>id;
+int findPar(int node) {
+	return par[node] = (node == par[node] ? node : findPar(par[node]));
+}
+void friends(int a, int b) {
+	a = findPar(a); b = findPar(b);
+	if (a != b) {
+		if (Sz[a] > Sz[b])
+			swap(a, b);
+		par[a] = b;
+		Sz[b] += Sz[a];
+	}
+}
+int main(){
+	K_K();
+	int n, q; cin >> n >> q;
+	par.resize(n), Sz.resize(n);
+	for (int i = 0; i < n; i++){
+		string s; cin >> s;
+		id[s] = i; par[i] = i; Sz[i] = 1;
+	}
+	while (q--){
+		int t; string a, b;
+		cin >> t >> a >> b;
+		if (t == 1)
+			friends(id[a], id[b]);
+		else
+			cout << (findPar(id[a]) == findPar(id[b]) ? "yes" : "no") << endl;
+	}
+}

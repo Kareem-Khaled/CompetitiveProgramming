@@ -1,0 +1,74 @@
+/*
+██╗  ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗        ██╗  ██╗██╗  ██╗ █████╗ ██╗     ███████╗██████╗
+██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║        ██║ ██╔╝██║  ██║██╔══██╗██║     ██╔════╝██╔══██╗
+█████╔╝ ███████║██████╔╝█████╗  █████╗  ██╔████╔██║        █████╔╝ ███████║███████║██║     █████╗  ██║  ██║
+██╔═██╗ ██╔══██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╔╝██║        ██╔═██╗ ██╔══██║██╔══██║██║     ██╔══╝  ██║  ██║
+██║  ██╗██║  ██║██║  ██║███████╗███████╗██║ ╚═╝ ██║███████╗██║  ██╗██║  ██║██║  ██║███████╗███████╗██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+Believe in yourself ,( try and try and then try ), You can do it
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#define endl "\n"
+#define clr(arr, x) memset(arr, x, sizeof arr)
+#define all(v) v.begin(),v.end()
+#define allr(v) v.rbegin(),v.rend()
+#define rt(s) return cout<<s,0
+#define sz(s)	(int)(s.size())
+#define OO 0x3f3f3f3f3f3f3f3fLL
+#define oo 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+int dx[]{ 1, -1, 0, 0, 1, 1, -1, -1 };
+int dy[]{ 0, 0, 1, -1, 1, -1, 1, -1 };
+void K_K() {
+#ifndef ONLINE_JUDGE
+	freopen("in.txt", "r", stdin);
+	freopen("out.txt", "w", stdout);
+#endif  !ONLINEJUDGE
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
+vector<int>tree, arr;
+void build(int ti, int tl, int tr){
+    if (tl == tr){
+        tree[ti] = arr[tl];
+        return;
+    }
+    int tm = (tl + tr) >> 1;
+    build(ti * 2, tl, tm);
+    build(ti * 2 + 1, tm + 1, tr);
+    tree[ti] = tree[2 * ti] + tree[2 * ti + 1];
+}
+void update(int ti, int tl, int tr, int pos, int val){
+    if(tl == tr){
+        tree[ti] = val;
+        return;
+    }
+    int tm = (tl + tr) >> 1;
+    if(pos <= tm)
+        update(ti * 2, tl, tm, pos, val);
+    else
+        update(ti * 2 + 1, tm + 1, tr, pos, val);
+    tree[ti] = tree[2 * ti] + tree[2 * ti + 1];
+}
+int get(int ti, int tl, int tr, int l, int r){
+    if(l > r) return 0;
+    if(tl == l && tr == r)
+        return tree[ti];
+    int tm = (tl + tr) >> 1;
+    return get(ti * 2, tl, tm, l, min(r, tm)) + get(ti * 2 + 1, tm + 1, tr, max(l, tm + 1), r);
+}
+int main(){
+    K_K();
+    int n; cin >> n;
+    arr = vector<int>(n); 
+    tree = vector<int>((n + 3) * 4); 
+    for(auto &it : arr) cin >> it;
+    build(1, 0, n - 1);
+    int q; cin >> q;
+    while(q--){
+        int x, l, r; cin >> x >> l >> r; l--; 
+        if(x == 1) update(1, 0, n - 1, l, r);
+        else cout << get(1, 0, n - 1, l, --r) << endl;
+    }
+}

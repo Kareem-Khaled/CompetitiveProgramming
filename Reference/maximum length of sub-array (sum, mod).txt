@@ -1,0 +1,18 @@
+﻿// maximum length of sub-array that it's sum % k = 0;
+int n; vector<int>arr;
+int solve(int k){
+	map<int, int> mp; vector<int>M(n);
+	int mx = 0, cur = 0;
+	for (int i = 0; i < n; i++){
+		cur += arr[i]; cur %= k; M[i] = cur;
+	}
+	for (int i = 0; i < n; i++)	{
+		if (M[i] == 0)
+			mx = i + 1;
+		else if (mp.find(M[i]) == mp.end())
+			mp[M[i]] = i;
+		else
+			mx = max(mx, i - mp[M[i]]);
+	}
+	return mx;
+}

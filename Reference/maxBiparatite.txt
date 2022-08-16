@@ -1,0 +1,32 @@
+﻿max-Biparatite
+int n, m; vector<int>col;
+vector<vector<int>>adjL;
+int cnt = 0;
+bool isBipartite(int node, bool cur){
+	col[node] = cur; cnt++;
+	for (auto child : adjL[node]){
+		if (!~col[child])
+			isBipartite(child, !cur);
+		else if (col[node] == col[child])
+			return 0;
+	}
+	return 1;
+}
+int main() {
+	K_K();
+	cin >> n >> m; col = vector<int>(n + 1, -1);
+	adjL = vector<vector<int>>(n + 1);
+	for (int i = 0; i < m; i++){
+		int u, v; cin >> u >> v;
+		adjL[u].push_back(v);
+		adjL[v].push_back(u);
+	}
+	int ans = 0;
+	for (int i = 1; i <= n; i++) {
+		if (!~col[i]){
+			if (!isBipartite(i, 0))
+				ans++, cnt--;
+		}
+	}
+	cout << n - ans;
+}

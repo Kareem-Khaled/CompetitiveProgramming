@@ -1,0 +1,36 @@
+﻿// maxSubarraySumCircular
+ll getMaxSubarray(vector<int> &v) {
+	int n = v.size();
+	ll mx = *max_element(v.begin(), v.end());
+	vector<ll> sum(n + 1);
+	ll mn = 0;
+	for (int i = 1; i <= n; i++) {
+		sum[i] = sum[i - 1] + v[i - 1];
+		mx = max(mx, sum[i] - mn);
+		mn = min(mn, sum[i]);
+	}
+	return mx;
+}
+
+ll maxSubarraySumCircular(vector<int> &v) {
+	ll mx = getMaxSubarray(v);
+	ll sum = 0;
+	for (auto &it : v){
+		sum += it;
+		it *= -1;
+	}
+	ll mx2 = -1 * getMaxSubarray(v);
+	if (mx2 != sum)
+		mx = max(mx, sum - mx2);
+	return mx;
+}
+
+int main() {
+	K_K();
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (auto &it : v)
+		cin >> it;
+	cout << maxSubarraySumCircular(v) << endl;
+}

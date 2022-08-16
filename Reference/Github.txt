@@ -1,0 +1,21 @@
+git config --global user.name "Kareem-Khaled"
+
+git config --global user.email "kareemkhaled143@gmail.com"
+
+ssh-keygen -t ed25519 -C "kareemkhaled143@gmail.com"
+
+files:
+C:\Users\KeMo\.ssh/<...>pub
+
+----------------------------------------------------------------------
+
+git clone 'ssh link'
+
+//add files into the folder
+cd 'folder name'
+
+git add .
+
+git commit -m "add"
+
+git push

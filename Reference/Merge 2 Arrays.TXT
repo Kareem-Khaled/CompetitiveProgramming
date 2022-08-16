@@ -1,0 +1,53 @@
+// Merge Two Arrays
+
+ll C[2*MAX],n,m;
+int A[MAX],B[MAX];
+void merge(int n,int m)
+{
+    int l1 = 0, l2 = 0, cnt = 0;
+    while ( l1 < n || l2 < m ) {
+       if ( l1 < n && l2 < m ) {
+          if ( A[l1] < B[l2] ) {
+              C[cnt++] = A[l1];
+              l1++;
+          }
+          else if ( A[l1] > B[l2] ) {
+              C[cnt++] = B[l2];
+              l2++;
+          }
+       }
+       else if ( l1 < n ) {
+          C[cnt++] = A[l1];
+          l1++;
+       }
+       else if ( l2 < m ) {
+          C[cnt++] = B[l2];
+          l2++;
+       }
+    }
+    return;
+}
+int main()
+{
+    file();
+    //fast();
+
+cin>>n>>m;
+
+for(int i=0;i<n;i++)
+{
+    cin>>A[i];
+}
+for(int i=0;i<m;i++)
+{
+    cin>>B[i];
+}
+merge(n,m);
+int v=max(n,m);
+for(int i=0;i<v;i++)
+{
+    cout<<C[i]<<" ";
+}
+
+
+}

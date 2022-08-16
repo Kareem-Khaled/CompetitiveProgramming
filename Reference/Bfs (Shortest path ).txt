@@ -1,0 +1,48 @@
+// Bfs (Shortest path)
+
+vector<int>Bfs(int s,int d, vector<vector<int>>&adjlist)
+{
+	vector<int>mem(sz(adjlist), OO);
+	vector<int>per(sz(adjlist), -1);
+
+	queue<int>q;
+	q.push(s);
+	mem[s] = 0;
+	int dep = 0, cur = s, szz;
+	bool ok = 1;
+	for (; ok&& !q.empty(); ++dep, szz = sz(q))
+	{
+		while (ok&&szz--)
+		{
+			cur = q.front();
+			q.pop();
+			for (int i = 0; i < sz(adjlist[cur]); i++)
+			{
+				if (mem[adjlist[cur][i]] == OO)
+				{
+					q.push(adjlist[cur][i]);
+					mem[adjlist[cur][i]] = dep + 1;
+					per[adjlist[cur][i]] = cur;
+					if (adjlist[cur][i] == d)
+					{
+						ok = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+		vector<int>path;
+		while (d != -1)
+		{
+			path.push_back(d);
+			d = per[d];
+		}
+		reverse(all(path));
+		return path;
+}
+int main()
+{
+	K_K();
+
+}
