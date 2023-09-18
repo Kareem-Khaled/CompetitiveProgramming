@@ -24,7 +24,7 @@ int dy[] { 0, -1, 1, 0, 1, -1, 1, -1 };
 int main(int argc, char *argv[]) {
 	registerTestlibCmd(argc, argv);
 	// inf - for the input
-	// outf - for the contestant output
+	// ouf - for the contestant output
 	// ans - for the solution output
 	// quitf(_ok, "The answer is correct.");
 	// quitf(_wa, "The answer is wrong: expected = %d, found = %d", jans, pans);
