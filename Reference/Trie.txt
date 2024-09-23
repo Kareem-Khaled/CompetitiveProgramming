@@ -1,5 +1,5 @@
 ﻿// Trie - to present a string in a graph
-class Trie{
+class Trie {
 private:
 	struct node{
 		node *child[26]; bool leaf;
@@ -13,25 +13,40 @@ public:
 		node* nd = new node();
 		for (int i = 0; i < 26; i++)
 			nd->child[i] = NULL;
-		nd->leaf = 1;
+		nd->leaf = 0;
 		return nd;
 	}
-	void add(string s){
+    
+    void insert(string word) {
 		node *nd = root;
-		for (int i = 0; i < sz(s); i++){
-			if (nd->child[s[i] - 'a'] == NULL){
-				nd->leaf = 0;
-				nd->child[s[i] - 'a'] = create();
+		for (int i = 0; i < word.size(); i++){
+			if (nd->child[word[i] - 'a'] == NULL){
+				nd->child[word[i] - 'a'] = create();
 			}
-			nd = nd->child[s[i] - 'a'];
+			nd = nd->child[word[i] - 'a'];
 		}
-	}
-	bool isPrefix(string s){
+        nd->leaf = 1;
+    }
+    
+    bool search(string word) {
 		node *nd = root;
-		for (int i = 0; i < sz(s); i++)
-			nd = nd->child[s[i] - 'a'];
-		return !nd->leaf;
-	}
+		for (int i = 0; i < word.size(); i++){
+            if(nd->child[word[i] - 'a'] == NULL)
+                return 0;
+			nd = nd->child[word[i] - 'a'];
+        }
+		return nd->leaf;        
+    }
+    
+    bool startsWith(string prefix) {
+		node *nd = root;
+		for (int i = 0; i < prefix.size(); i++){
+            if(nd->child[prefix[i] - 'a'] == NULL)
+                return 0;
+			nd = nd->child[prefix[i] - 'a'];
+        }
+		return true;
+    }
 };
 
 int main(){
