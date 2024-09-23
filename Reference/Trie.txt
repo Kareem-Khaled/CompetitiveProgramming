@@ -1,56 +1,55 @@
 ﻿// Trie - to present a string in a graph
 class Trie {
 private:
-	struct node{
-		node *child[26]; bool leaf;
+	struct node {
+		node* child[26]; bool leaf;
 	};
 	node* root;
 public:
-	Trie(){
+	Trie() {
 		root = create();
 	}
-	node* create(){
+	node* create() {
 		node* nd = new node();
 		for (int i = 0; i < 26; i++)
 			nd->child[i] = NULL;
 		nd->leaf = 0;
 		return nd;
 	}
-    
-    void insert(string word) {
-		node *nd = root;
-		for (int i = 0; i < word.size(); i++){
-			if (nd->child[word[i] - 'a'] == NULL){
+
+	void insert(string word) {
+		node* nd = root;
+		for (int i = 0; i < word.size(); i++) {
+			if (nd->child[word[i] - 'a'] == NULL) {
 				nd->child[word[i] - 'a'] = create();
 			}
 			nd = nd->child[word[i] - 'a'];
 		}
-        nd->leaf = 1;
-    }
-    
-    bool search(string word) {
-		node *nd = root;
-		for (int i = 0; i < word.size(); i++){
-            if(nd->child[word[i] - 'a'] == NULL)
-                return 0;
+		nd->leaf = 1;
+	}
+
+	bool search(string word) {
+		node* nd = root;
+		for (int i = 0; i < word.size(); i++) {
+			if (nd->child[word[i] - 'a'] == NULL)
+				return 0;
 			nd = nd->child[word[i] - 'a'];
-        }
-		return nd->leaf;        
-    }
-    
-    bool startsWith(string prefix) {
-		node *nd = root;
-		for (int i = 0; i < prefix.size(); i++){
-            if(nd->child[prefix[i] - 'a'] == NULL)
-                return 0;
+		}
+		return nd->leaf;
+	}
+
+	bool startsWith(string prefix) {
+		node* nd = root;
+		for (int i = 0; i < prefix.size(); i++) {
+			if (nd->child[prefix[i] - 'a'] == NULL)
+				return 0;
 			nd = nd->child[prefix[i] - 'a'];
-        }
+		}
 		return true;
-    }
+	}
 };
 
-int main(){
+int main() {
 	K_K();
 	Trie trie = Trie();
-
 }
