@@ -1,0 +1,50 @@
+class Trie {
+private:
+	struct node {
+		int cnt;
+		bool leaf;
+		node* child[26];
+		node() : cnt(0), leaf(0) {
+			for (int i = 0; i < 26; i++)
+				child[i] = NULL;
+		}
+	};
+	node* root;
+public:
+	Trie() {
+		root = new node();
+	}
+
+	void insert(string& word) {
+		node* nd = root;
+		for (auto ch : word) {
+			if (nd->child[ch - 'a'] == NULL) {
+				nd->child[ch - 'a'] = new node();
+			}
+			nd = nd->child[ch - 'a'];
+			nd->cnt++;
+		}
+		nd->leaf = 1;
+	}
+
+	int search(string& word) {
+		node* nd = root;
+		int cnt = 0;
+		for (auto ch : word) {
+			if (nd->child[ch - 'a'] == NULL)
+				return 0;
+			nd = nd->child[ch - 'a'];
+			cnt += nd->cnt;
+		}
+		return cnt;
+	}
+	bool startsWith(string& prefix) {
+		node* nd = root;
+		for (auto ch : prefix) {
+			if (nd->child[ch - 'a'] == NULL)
+				return 0;
+			nd = nd->child[ch - 'a'];
+		}
+		return 1;
+	}
+};
