@@ -62,4 +62,4 @@ ex: 11*13 = 143
 when paramertrs are (odd +) when (even -)
 
 
-- getting the cnt of distinct (gcd, or, and, ..) sub-problems will be at most log2() -> so we can binary search and use any range query algo.
+- getting the cnt of distinct (gcd, or, and, ..) for all sub-arrs will be at most (log2) -> so we can binary search and use any range query algo.
