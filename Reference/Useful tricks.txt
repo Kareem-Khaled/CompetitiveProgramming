@@ -60,3 +60,6 @@ ex: 11*13 = 143
 
 (x/a)+(x/b)+(x/c)-(x/lcm(a,b))-(x/lcm(b,c))-(x/lcm(a,c))+(x/lcm(a,b,c))
 when paramertrs are (odd +) when (even -)
+
+
+- getting the cnt of distinct (gcd, or, and, ..) sub-problems will be at most log2() -> so we can binary search and use any range query algo.
