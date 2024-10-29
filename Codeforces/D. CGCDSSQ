@@ -1,0 +1,84 @@
+/*
+██╗  ██╗ █████╗ ██████╗ ███████╗███████╗███╗   ███╗        ██╗  ██╗██╗  ██╗ █████╗ ██╗     ███████╗██████╗
+██║ ██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝████╗ ████║        ██║ ██╔╝██║  ██║██╔══██╗██║     ██╔════╝██╔══██╗
+█████╔╝ ███████║██████╔╝█████╗  █████╗  ██╔████╔██║        █████╔╝ ███████║███████║██║     █████╗  ██║  ██║
+██╔═██╗ ██╔══██║██╔══██╗██╔══╝  ██╔══╝  ██║╚██╔╝██║        ██╔═██╗ ██╔══██║██╔══██║██║     ██╔══╝  ██║  ██║
+██║  ██╗██║  ██║██║  ██║███████╗███████╗██║ ╚═╝ ██║███████╗██║  ██╗██║  ██║██║  ██║███████╗███████╗██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+Believe in yourself ,( try and try and then try ), You can do it
+*/
+// Problem Link: https://codeforces.com/contest/475/problem/D
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#define endl "\n"
+#define clr(arr, x) memset(arr, x, sizeof arr)
+#define all(v) v.begin(),v.end()
+#define allr(s) s.rbegin(),s.rend()
+#define rt(s) return cout<<s,0
+#define sz(s)	(int)(s.size())
+#define OO 0x3f3f3f3f3f3f3f3fLL
+#define oo 0x3f3f3f3f
+using namespace std;
+typedef long long ll;
+int dx[]{ 1, -1, 0, 0, 1, 1, -1, -1 };
+int dy[]{ 0, 0, 1, -1, 1, -1, 1, -1 };
+void K_K() {
+#ifndef ONLINE_JUDGE
+	freopen("in.txt", "r", stdin);
+	//freopen("out.txt", "w", stdout);
+#endif  !ONLINEJUDGE
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+}
+struct sparceTable{
+    int Log = 20;
+    vector<vector<ll>> table;
+    ll merge(ll a, ll b){
+        return gcd(a, b);
+    }
+    sparceTable(int n, vector<int> &arr){
+        table = vector<vector<ll>> (n + 1, vector<ll>(Log));
+        for(int i = 0; i < n; i++){
+            table[i][0] = arr[i];
+        }
+        for(int pw = 1; (1 << pw) <= n; pw++){
+            for(int i = 0; i + (1 << pw) <= n; i++){
+                ll nxt = table[i + (1 << (pw - 1))][pw - 1];
+                table[i][pw] = merge(table[i][pw - 1], nxt);
+            }
+        }
+    }
+    ll get(int l, int r){
+        int Log = log2(r - l + 1);
+        return merge(table[l][Log], table[r - (1 << Log) + 1][Log]);
+    }
+};
+int main() {
+    K_K();
+    int n; cin >> n;
+    vector<int>arr(n);
+    for(auto &it : arr) cin >> it;
+    sparceTable spt(n, arr);
+    unordered_map<ll, ll> ans;
+    for(int i = 0; i < n; i++){
+        int j = i;
+        while(j < n){
+            int l = j, r = n - 1, g = spt.get(i, j), idx = j;
+            while(l <= r){
+                int m = (l + r) >> 1;
+                if(spt.get(i, m) == g){
+                    idx = m;
+                    l = m + 1;
+                }
+                else
+                    r = m - 1;
+            }
+            ans[g] += idx - j + 1;
+            j = idx + 1;
+        }
+    }
+    int q; cin >> q;
+    while(q--){
+        int x; cin >> x;
+        cout << ans[x] << endl;
+    }
+}
