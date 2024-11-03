@@ -1,0 +1,80 @@
+struct node {
+    ll val, lazy_a, lazy_d;
+    bool is_lazy;
+ 
+    node(ll val = 0) : val(val), lazy_a(0), lazy_d(0), is_lazy(0) {}
+    
+    void change(int lx, int rx, ll a, ll d) {
+        int len = rx - lx;
+        val += len * a + (len * (len - 1) / 2) * d;
+        lazy_a += a;
+        lazy_d += d;
+        is_lazy = 1;
+    }
+};
+struct segTree {
+    int size;
+    vector<node>seg;
+ 
+    segTree(int n) {
+        size = 1;
+        while (size < n) size *= 2;
+        seg = vector<node>(size * 2);
+    }
+ 
+    node merge(node& a, node& b) {
+        return node(a.val + b.val);
+    }
+ 
+    void propagate(int idx, int lx, int rx) {
+        if (rx - lx == 1 || !seg[idx].is_lazy)
+            return;
+ 
+        int m = (lx + rx) >> 1;
+        seg[idx * 2 + 1].change(lx, m, seg[idx].lazy_a, seg[idx].lazy_d);
+        seg[idx * 2 + 2].change(m, rx, seg[idx].lazy_a + seg[idx].lazy_d * (m - lx), seg[idx].lazy_d);
+ 
+        seg[idx].lazy_a = 0;
+        seg[idx].lazy_d = 0;
+        seg[idx].is_lazy = 0;
+    }
+ 
+    void set(int l, int r, ll a, ll d, int idx, int lx, int rx) {
+        propagate(idx, lx, rx);
+        if (lx >= r || rx <= l) return;
+        if (lx >= l && rx <= r) {
+            seg[idx].change(lx, rx, a + d * (lx - l), d);
+            return;
+        }
+        int m = (lx + rx) >> 1;
+        set(l, r, a, d, idx * 2 + 1, lx, m);
+        set(l, r, a, d, idx * 2 + 2, m, rx);
+ 
+        seg[idx] = merge(seg[idx * 2 + 1], seg[idx * 2 + 2]);
+    }
+ 
+    void set(int l, int r, ll a, ll d) {
+        set(l, r, a, d, 0, 0, size);
+    }
+ 
+    node get(int l, int r, int idx, int lx, int rx) {
+        propagate(idx, lx, rx);
+        if (lx >= r || rx <= l) return node(0);
+        if (lx >= l && rx <= r) return seg[idx];
+        int m = (lx + rx) >> 1;
+        auto a = get(l, r, idx * 2 + 1, lx, m);
+        auto b = get(l, r, idx * 2 + 2, m, rx);
+ 
+        return merge(a, b);
+    }
+ 
+    node get(int l, int r) {
+        return get(l, r, 0, 0, size);
+    }
+ 
+    void print() {
+        for (int i = 0; i < size * 2; i++) {
+            cout << seg[i].val << " ";
+        }
+    }
+};
