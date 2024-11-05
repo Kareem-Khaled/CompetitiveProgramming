@@ -17,7 +17,16 @@ struct sparceTable{
         }
     }
     ll get(int l, int r){
-        int Log = log2(r - l + 1);
-        return merge(table[l][Log], table[r - (1 << Log) + 1][Log]);
+        //int Log = log2(r - l + 1);
+        //return merge(table[l][Log], table[r - (1 << Log) + 1][Log]);
+        int len = r - l + 1;
+        ll ret = 0;
+        for(int pw = Log - 1; pw > -1; pw--){
+            if(len & (1 << pw)){
+                ret = merge(ret, table[l][pw]);
+                l += (1 << pw);
+            }
+        }
+        return ret;
     }
 };
